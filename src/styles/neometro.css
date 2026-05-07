@@ -1,0 +1,194 @@
+/* src/styles/neometro.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #030611;
+    color: #e0f2fe;
+  }
+  
+  .glass {
+    background: rgba(11, 18, 39, 0.85);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.08);
+    transition: all 0.4s ease;
+  }
+  
+  .glass:hover {
+    border-color: rgba(0, 212, 255, 0.45);
+    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+    transform: translateY(-4px);
+  }
+  
+  .neon-cyan {
+    color: #00f5ff;
+    text-shadow: 0 0 15px #00f5ff;
+  }
+  
+  .header {
+    background: rgba(6, 11, 25, 0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+  }
+  
+  .card-grid {
+    display: grid;
+    gap: 20px;
+  }
+  
+  .btn-neon {
+    background: linear-gradient(90deg, #00d4ff, #7c3aed);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-neon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(0, 212, 255, 0.6);
+  }
+  
+  .btn-neon:active {
+    transform: scale(0.98);
+  }
+  
+  /* Table Styling */
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .custom-table th {
+    background: rgba(6, 11, 25, 0.8);
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+  }
+  
+  .custom-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+  }
+  
+  .custom-table tr:hover {
+    background: rgba(0, 212, 255, 0.08);
+  }
+  
+  /* Login Page Specific */
+  .login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, rgba(0, 245, 255, 0.08), transparent 70%);
+  }
+  
+  .login-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 48px 40px;
+    border-radius: 28px;
+  }
+  /* src/styles/neometro.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #030611;
+    color: #e0f2fe;
+  }
+  
+  .glass {
+    background: rgba(11, 18, 39, 0.85);
+    border: 1px solid rgba(0, 212, 255, 0.18);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.08);
+    transition: all 0.4s ease;
+  }
+  
+  .glass:hover {
+    border-color: rgba(0, 212, 255, 0.45);
+    box-shadow: 0 20px 45px rgba(0, 212, 255, 0.18);
+    transform: translateY(-4px);
+  }
+  
+  .neon-cyan {
+    color: #00f5ff;
+    text-shadow: 0 0 15px #00f5ff;
+  }
+  
+  .header {
+    background: rgba(6, 11, 25, 0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+  }
+  
+  .btn-neon {
+    background: linear-gradient(90deg, #00d4ff, #7c3aed);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-neon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.7);
+  }
+  
+  .custom-table th {
+    background: rgba(6, 11, 25, 0.9);
+    padding: 18px 20px;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+  }
+  
+  .custom-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+  }
+  
+  .custom-table tr:hover {
+    background: rgba(0, 212, 255, 0.1);
+  }
+  
+  /* Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 212, 255, 0.3);
+    border-radius: 20px;
+  }
