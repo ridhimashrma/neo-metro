@@ -3,6 +3,9 @@ import L from 'leaflet';
 import { Wind, AlertTriangle, TrendingDown, Gauge } from 'lucide-react';
 import { aqiStations, aqiHistory, getAQICategory, CITY_CENTER_COORDS } from '../data/mockData';
 import '../styles/neometro.css';
+import { useContext, useEffect, useState } from "react";
+import { LocationContext } from "../context/LocationContext";
+
 
 function createAQIIcon(aqi) {
   const cat = getAQICategory(aqi);
@@ -15,6 +18,33 @@ function createAQIIcon(aqi) {
 }
 
 export default function AQIDashboard() {
+  const { location } = useContext(LocationContext);
+  const [aqiData, setAqiData] = useState(null);
+  useEffect(() => {
+    if (!location.latitude) return;
+
+    const fetchAQI = async () => {
+      try {
+        const API_KEY = "YOUR_OPENWEATHER_API_KEY";
+
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/air_pollution?lat=${location.latitude}&lon=${location.longitude}&appid=${API_KEY}`
+        );
+
+        const data = await response.json();
+
+        setAqiData(data.list[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchAQI();
+
+    const interval = setInterval(fetchAQI, 10000);
+
+    return () => clearInterval(interval);
+  }, [location]);
   const avgAQI = Math.round(aqiStations.reduce((s, a) => s + a.aqi, 0) / aqiStations.length);
   const avgCat = getAQICategory(avgAQI);
   const worst = aqiStations.reduce((a, b) => a.aqi > b.aqi ? a : b);
@@ -31,7 +61,7 @@ export default function AQIDashboard() {
         <div className="glass p-8 text-center">
           <Wind size={40} className="mx-auto mb-4 text-cyan-400" />
           <p className="text-6xl font-black">{avgAQI}</p>
-          <p className="text-sm uppercase tracking-widest mt-2" style={{color: avgCat.color}}>{avgCat.label}</p>
+          <p className="text-sm uppercase tracking-widest mt-2" style={{ color: avgCat.color }}>{avgCat.label}</p>
         </div>
         <div className="glass p-8 text-center">
           <AlertTriangle size={40} className="mx-auto mb-4 text-red-400" />
@@ -58,7 +88,7 @@ export default function AQIDashboard() {
               const cat = getAQICategory(station.aqi);
               return (
                 <div key={station.id} className="glass p-6 text-center">
-                  <div style={{color: cat.color, fontSize: '2.5rem', fontWeight: '900'}}>{station.aqi}</div>
+                  <div style={{ color: cat.color, fontSize: '2.5rem', fontWeight: '900' }}>{station.aqi}</div>
                   <p className="text-sm mt-2">{station.name}</p>
                 </div>
               );
@@ -66,8 +96,8 @@ export default function AQIDashboard() {
           </div>
         </div>
 
-        <div className="glass overflow-hidden" style={{height: '420px'}}>
-          <MapContainer center={CITY_CENTER_COORDS} zoom={12} style={{height: '100%', width: '100%'}}>
+        <div className="glass overflow-hidden" style={{ height: '420px' }}>
+          <MapContainer center={CITY_CENTER_COORDS} zoom={12} style={{ height: '100%', width: '100%' }}>
             <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
             {aqiStations.map(station => (
               <Marker key={station.id} position={station.location} icon={createAQIIcon(station.aqi)}>

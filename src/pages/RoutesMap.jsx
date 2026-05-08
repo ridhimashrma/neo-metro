@@ -4,6 +4,9 @@ import L from 'leaflet';
 import { MapPin, Route, Clock } from 'lucide-react';
 import { busRoutes, busStops, CITY_CENTER_COORDS } from '../data/mockData';
 import '../styles/neometro.css';
+import { useContext } from "react";
+import LiveMap from "../components/LiveMap";
+import { LocationContext } from "../context/LocationContext";
 
 const stopIcon = L.divIcon({
   html: '<div style="background:#0b1227;width:16px;height:16px;border-radius:50%;border:3px solid #00d4ff;box-shadow:0 0 12px #00d4ff;"></div>',
@@ -13,6 +16,16 @@ const stopIcon = L.divIcon({
 
 export default function RoutesMap() {
   const [selectedRoute, setSelectedRoute] = useState(null);
+  const { location } = useContext(LocationContext);
+
+  {
+    location.latitude && (
+      <LiveMap
+        lat={location.latitude}
+        lon={location.longitude}
+      />
+    )
+  }
 
   return (
     <div className="p-8 space-y-8">
@@ -45,7 +58,7 @@ export default function RoutesMap() {
         <div className="lg:col-span-3 glass overflow-hidden" style={{ height: '620px' }}>
           <MapContainer center={CITY_CENTER_COORDS} zoom={12} style={{ height: '100%', width: '100%' }}>
             <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
-            
+
             {busRoutes.map(route => (
               <Polyline
                 key={route.id}
