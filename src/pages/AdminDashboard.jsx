@@ -72,12 +72,12 @@ export default function AdminDashboard() {
           </div>
           <div className="glass p-8">
             <Bus size={36} className="text-purple-400" />
-            <p className="text-5xl font-black mt-6">{buses.length}</p>
+            <p className="text-5xl font-black mt-6">{buses?.length || 0}</p>
             <p className="text-sm uppercase tracking-widest text-gray-400">Buses</p>
           </div>
           <div className="glass p-8">
             <Shield size={36} className="text-red-400" />
-            <p className="text-5xl font-black mt-6">{emergencyReports.length}</p>
+            <p className="text-5xl font-black mt-6">{emergencyReports?.length || 0}</p>
             <p className="text-sm uppercase tracking-widest text-gray-400">Emergencies</p>
           </div>
           <div className="glass p-8">
@@ -110,7 +110,7 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {buses.map(bus => (
+                {buses?.map(bus => (
                   <tr key={bus.id}>
                     <td className="font-mono">{bus.id}</td>
                     <td>{bus.routeNumber} - {bus.routeName}</td>
@@ -145,7 +145,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="space-y-4">
-            {emergencyReports.map(report => (
+            {emergencyReports?.map(report => (
               <div key={report.id} className="glass p-6 flex items-center justify-between border-l-4 border-red-500">
                 <div className="flex-1">
                   <h4 className="font-bold capitalize text-lg">{report.type}</h4>
@@ -181,7 +181,7 @@ export default function AdminDashboard() {
         <div className="glass p-8">
           <h3 className="text-2xl font-bold mb-6">All Registered Complaints</h3>
           <div className="space-y-6">
-            {complaints.map(c => (
+            {complaints?.map(c => (
               <div key={c.id} className="glass p-8 flex justify-between">
                 <div className="flex-1">
                   <h4 className="font-bold text-lg">{c.subject}</h4>
