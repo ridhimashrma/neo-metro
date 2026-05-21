@@ -84,14 +84,17 @@ export default function AQIDashboard() {
     const fetchAQI = async () => {
 
       try {
-
+        console.log(import.meta.env.VITE_OPENWEATHER_API_KEY);
+        
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/air_pollution?lat=${location.latitude}&lon=${location.longitude}&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`
         );
 
         const data = await response.json();
 
-        setAqiData(data.list[0]);
+        if (data.list && data.list.length > 0) {
+          setAqiData(data.list[0]);
+        }
 
         setLoading(false);
 
