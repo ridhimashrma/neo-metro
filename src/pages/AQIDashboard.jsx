@@ -128,7 +128,7 @@ export default function AQIDashboard() {
 
       <div className="p-8">
 
-        <div className="glass p-8 text-center">
+        <div className="glass p-8 rounded-3xl text-center border border-white/10 hover:border-cyan-400/30 hover:-translate-y-1 transition-all duration-300">
 
           <h2 className="text-3xl font-bold text-cyan-400">
             Fetching Live AQI...
@@ -185,11 +185,11 @@ export default function AQIDashboard() {
 
   return (
 
-    <div className="p-8 space-y-8">
+    <div className="p-8 space-y-8 min-h-screen bg-[#07111f] text-white">
 
       {/* HEADER */}
 
-      <div className="glass p-8">
+      <div className="glass p-8 rounded-3xl border border-cyan-500/20 shadow-[0_0_40px_rgba(0,255,255,0.05)]">
 
         <h1 className="neon-cyan text-3xl font-black">
           ATMOSPHERIC SURVEILLANCE
@@ -211,14 +211,14 @@ export default function AQIDashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-        <div className="glass p-8 text-center">
+        <div className="glass p-8 rounded-3xl text-center border border-white/10 hover:border-cyan-400/30 hover:-translate-y-1 transition-all duration-300">
 
           <Wind
             size={40}
             className="mx-auto mb-4 text-cyan-400"
           />
 
-          <p className="text-6xl font-black">
+          <p className="text-6xl md:text-7xl font-black tracking-tight">
             {aqi}
           </p>
 
@@ -231,7 +231,7 @@ export default function AQIDashboard() {
 
         </div>
 
-        <div className="glass p-8 text-center">
+        <div className="glass p-8 rounded-3xl text-center border border-white/10 hover:border-cyan-400/30 hover:-translate-y-1 transition-all duration-300">
 
           <AlertTriangle
             size={40}
@@ -248,7 +248,7 @@ export default function AQIDashboard() {
 
         </div>
 
-        <div className="glass p-8 text-center">
+        <div className="glass p-8 rounded-3xl text-center border border-white/10 hover:border-cyan-400/30 hover:-translate-y-1 transition-all duration-300">
 
           <TrendingDown
             size={40}
@@ -265,7 +265,7 @@ export default function AQIDashboard() {
 
         </div>
 
-        <div className="glass p-8 text-center">
+        <div className="glass p-8 rounded-3xl text-center border border-white/10 hover:border-cyan-400/30 hover:-translate-y-1 transition-all duration-300">
 
           <Gauge
             size={40}
@@ -290,7 +290,7 @@ export default function AQIDashboard() {
 
         {/* LIVE DETAILS */}
 
-        <div className="glass p-8">
+        <div className="glass p-8 rounded-3xl border border-cyan-500/20 shadow-[0_0_40px_rgba(0,255,255,0.05)]">
 
           <h3 className="text-2xl font-bold mb-6">
             Live Air Composition
