@@ -6,6 +6,7 @@ const API_BASE = 'http://localhost:5000/api';
 const DataContext = createContext();
 
 export function DataProvider({ children }) {
+  const [buses, setBuses] = useState([]);
   const [emergencyReports, setEmergencyReports] = useState([]);
   const [complaints, setComplaints] = useState([]);
 

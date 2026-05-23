@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+
 const cors = require("cors");
 require("dotenv").config();
 
@@ -18,7 +19,11 @@ mongoose
   });
 
 const sosRoutes = require("./routes/sosRoutes");
+const emergencyRoutes = require("./routes/emergencyRoutes");
+const complaintRoutes = require("./routes/complaintRoutes");
 
+app.use("/api/emergencies", emergencyRoutes);
+app.use("/api/complaints", complaintRoutes);
 app.use("/api/sos", sosRoutes);
 
 app.get("/", (req, res) => {
