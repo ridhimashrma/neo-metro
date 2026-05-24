@@ -19,14 +19,24 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+  
     if (isLogin) {
       const success = await login(email, password);
-      if (success) navigate('/dashboard');
-      else setError('Invalid credentials');
+  
+      if (success) {
+        navigate('/dashboard');
+      } else {
+        setError('Invalid credentials');
+      }
+  
     } else {
       const success = await register(name, email, password, phone);
-      if (success) navigate('/dashboard');
-      else setError('Email already exists');
+  
+      if (success) {
+        navigate('/dashboard');
+      } else {
+        setError('Registration failed');
+      }
     }
   };
 

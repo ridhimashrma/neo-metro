@@ -10,7 +10,9 @@ export default function AdminDashboard() {
   const { 
     emergencyReports, addEmergency, deleteEmergency,
     complaints, deleteComplaint,
-    buses 
+    buses,
+    addBus,
+    deleteBus
   } = useData();
 
   const [activeSection, setActiveSection] = useState('overview');
@@ -36,6 +38,29 @@ export default function AdminDashboard() {
     // For demo - we'll just alert (you can enhance DataContext later)
     alert(`Emergency ${id} status updated to: ${newStatus}`);
   };
+
+  
+  const handleAddBus = () => {
+  const routeNumber = prompt("Enter Route Number:");
+  if (!routeNumber) return;
+
+  const routeName = prompt("Enter Route Name:");
+  if (!routeName) return;
+
+  const driverName = prompt("Enter Driver Name:");
+  if (!driverName) return;
+
+  addBus({
+    id: Date.now(),
+    routeNumber,
+    routeName,
+    driverName,
+    status: "on-time",
+    fuelLevel: 100
+  });
+
+  alert("Bus Added Successfully");
+};
 
   return (
     <div className="p-8 space-y-8">
@@ -93,7 +118,10 @@ export default function AdminDashboard() {
         <div className="glass p-8">
           <div className="flex justify-between mb-6">
             <h3 className="text-2xl font-bold">Fleet Management</h3>
-            <button className="btn-neon flex items-center gap-2">
+            <button
+  onClick={handleAddBus}
+  className="btn-neon flex items-center gap-2"
+>
               <Plus size={20} /> Add New Bus
             </button>
           </div>
@@ -122,9 +150,12 @@ export default function AdminDashboard() {
                     </td>
                     <td>{bus.fuelLevel}%</td>
                     <td>
-                      <button className="text-red-400 hover:text-red-500">
-                        <Trash2 size={18} />
-                      </button>
+                      <button
+  onClick={() => deleteBus(bus.id)}
+  className="text-red-400 hover:text-red-500"
+>
+  <Trash2 size={18} />
+</button>
                     </td>
                   </tr>
                 ))}
@@ -163,12 +194,12 @@ export default function AdminDashboard() {
                     <option value="resolved">Resolved</option>
                   </select>
                   
-                  <button 
-                    onClick={() => deleteEmergency(report.id)}
-                    className="text-red-400 hover:text-red-500 p-2"
-                  >
-                    <Trash2 size={22} />
-                  </button>
+                  <button
+  onClick={() => deleteEmergency(report._id)}
+  className="text-red-400 hover:text-red-500 p-2"
+>
+  <Trash2 size={20} />
+</button>
                 </div>
               </div>
             ))}

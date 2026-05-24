@@ -11,18 +11,18 @@ const LocationProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    const watchId = navigator.geolocation.watchPosition(
+    navigator.geolocation.getCurrentPosition(
       async (position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-
+    
         try {
           const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
           );
-
+    
           const data = await response.json();
-
+    
           setLocation({
             latitude: lat,
             longitude: lon,
@@ -33,6 +33,7 @@ const LocationProvider = ({ children }) => {
               "Unknown",
             address: data.display_name,
           });
+    
         } catch (err) {
           console.log(err);
         }
@@ -42,12 +43,9 @@ const LocationProvider = ({ children }) => {
       },
       {
         enableHighAccuracy: true,
-        maximumAge: 0,
         timeout: 5000,
       }
     );
-
-    return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
   return (

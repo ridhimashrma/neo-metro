@@ -79,7 +79,10 @@ export default function AQIDashboard() {
 
   useEffect(() => {
 
-    if (!location.latitude) return;
+    if (
+  location.latitude == null ||
+  location.longitude == null
+) return;
 
     const fetchAQI = async () => {
 
@@ -90,13 +93,27 @@ export default function AQIDashboard() {
           `https://api.openweathermap.org/data/2.5/air_pollution?lat=${location.latitude}&lon=${location.longitude}&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`
         );
 
-        const data = await response.json();
+        console.log("STATUS:", response.status);
 
-        if (data.list && data.list.length > 0) {
-          setAqiData(data.list[0]);
-        }
+if (!response.ok) {
+  throw new Error("AQI API Failed");
+}
 
-        setLoading(false);
+const data = await response.json();
+
+console.log("AQI RESPONSE:", data);
+
+if (data.list && data.list.length > 0) {
+
+  setAqiData(data.list[0]);
+
+} else {
+
+  console.log("AQI DATA NOT FOUND");
+
+}
+
+setLoading(false);
 
       } catch (err) {
 
@@ -122,10 +139,10 @@ export default function AQIDashboard() {
   // =========================
 
   if (
-    loading ||
-    !location.latitude ||
-    !aqiData
-  ) {
+  loading ||
+  location.latitude == null ||
+  !aqiData
+) {
 
     return (
 

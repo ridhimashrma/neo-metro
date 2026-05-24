@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'http://localhost:8787/api';
 
 const DataContext = createContext();
 
@@ -41,20 +41,34 @@ export function DataProvider({ children }) {
     setComplaints(prev => [res.data, ...prev]);
   };
 
-  const deleteComplaint = async (id) => {
-    await axios.delete(`${API_BASE}/complaints/${id}`);
-    setComplaints(prev => prev.filter(c => c._id !== id));
-  };
+  const deleteComplaint = (id) => {
+  setComplaints(prev =>
+    prev.filter(c => c.id !== id)
+  );
+};
+
+  const addBus = (bus) => {
+  setBuses(prev => [...prev, bus]);
+};
+
+const deleteBus = (id) => {
+  setBuses(prev =>
+    prev.filter(bus => bus.id !== id)
+  );
+};
 
   return (
     <DataContext.Provider value={{
-      emergencyReports,
-      complaints,
-      addEmergency,
-      deleteEmergency,
-      addComplaint,
-      deleteComplaint,
-    }}>
+  buses,
+  addBus,
+  deleteBus,
+  emergencyReports,
+  complaints,
+  addEmergency,
+  deleteEmergency,
+  addComplaint,
+  deleteComplaint,
+}}>
       {children}
     </DataContext.Provider>
   );

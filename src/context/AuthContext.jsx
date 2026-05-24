@@ -1,12 +1,12 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 
 const AuthContext = createContext(undefined);
 
-const mockUsers = [
-  { id: 'U001', name: 'Admin User', email: 'admin@smartcity.com', password: 'admin123', role: 'admin', phone: '+91-9876543210' },
-  { id: 'U002', name: 'John Citizen', email: 'user@smartcity.com', password: 'user123', role: 'user', phone: '+91-9876543211' },
-  { id: 'U003', name: 'Bus Operator', email: 'operator@smartcity.com', password: 'op123', role: 'operator', phone: '+91-9876543212' },
-];
+// const mockUsers = [
+//   { id: 'U001', name: 'Admin User', email: 'admin@smartcity.com', password: 'admin123', role: 'admin', phone: '+91-9876543210' },
+//   { id: 'U002', name: 'John Citizen', email: 'user@smartcity.com', password: 'user123', role: 'user', phone: '+91-9876543211' },
+//   { id: 'U003', name: 'Bus Operator', email: 'operator@smartcity.com', password: 'op123', role: 'operator', phone: '+91-9876543212' },
+// ];
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -14,41 +14,89 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (email, password) => {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 600));
-    const found = mockUsers.find(u => u.email === email && u.password === password);
-    if (found) {
-      const { password: _, ...userData } = found;
-      setUser(userData);
-      localStorage.setItem('smartcity_token', `jwt_${found.id}_${Date.now()}`);
+  
+    try {
+      const response = await fetch('http://localhost:8787/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        setUser(data.user);
+  
+        localStorage.setItem('smartcity_token', data.token);
+        localStorage.setItem('smartcity_user', JSON.stringify(data.user));
+  
+        setIsLoading(false);
+        return true;
+      }
+  
       setIsLoading(false);
-      return true;
+      return false;
+  
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      return false;
     }
-    setIsLoading(false);
-    return false;
   }, []);
 
   const register = useCallback(async (name, email, password, phone) => {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 600));
-    const exists = mockUsers.find(u => u.email === email);
-    if (exists) {
+  
+    try {
+      const response = await fetch('http://localhost:8787/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          phone,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        setUser(data.user);
+  
+        localStorage.setItem('smartcity_token', data.token);
+        localStorage.setItem('smartcity_user', JSON.stringify(data.user));
+  
+        setIsLoading(false);
+        return true;
+      }
+  
       setIsLoading(false);
-      return false;
+      return data.message;
+  
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      return data.message;
     }
-    const newUser = {
-      id: `U${String(mockUsers.length + 1).padStart(3, '0')}`,
-      name, email, role: 'user', phone
-    };
-    mockUsers.push({ ...newUser, password });
-    setUser(newUser);
-    localStorage.setItem('smartcity_token', `jwt_${newUser.id}_${Date.now()}`);
-    setIsLoading(false);
-    return true;
   }, []);
 
+  useEffect(() => {
+    const savedUser = localStorage.getItem('smartcity_user');
+    const token = localStorage.getItem('smartcity_token');
+  
+    if (savedUser && token) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
   const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem('smartcity_token');
+    localStorage.removeItem('smartcity_user');
   }, []);
 
   return (

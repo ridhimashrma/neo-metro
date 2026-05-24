@@ -1,36 +1,39 @@
-const express = require("express");
+const express = require('express');
+const Complaint = require('../models/Complaint');
 
 const router = express.Router();
 
-let complaints = [];
+router.get('/', async (req, res) => {
+  try {
+    const complaints = await Complaint.find().sort({ createdAt: -1 });
 
-router.get("/", (req, res) => {
-  res.json(complaints);
+    res.json(complaints);
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-router.post("/", (req, res) => {
+router.post('/', async (req, res) => {
+  try {
+    const complaint = await Complaint.create(req.body);
 
-  const newComplaint = {
-    id: Date.now(),
-    ...req.body,
-  };
+    res.status(201).json(complaint);
 
-  complaints.push(newComplaint);
-
-  res.status(201).json(newComplaint);
-
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-router.delete("/:id", (req, res) => {
+router.delete('/:id', async (req, res) => {
+  try {
+    await Complaint.findByIdAndDelete(req.params.id);
 
-  complaints = complaints.filter(
-    (item) => item.id != req.params.id
-  );
+    res.json({ message: 'Complaint deleted' });
 
-  res.json({
-    message: "Complaint deleted",
-  });
-
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 module.exports = router;

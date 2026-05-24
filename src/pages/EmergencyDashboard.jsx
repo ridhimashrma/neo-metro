@@ -42,7 +42,7 @@ export default function EmergencyDashboard() {
       try {
 
         const response = await fetch(
-          "http://localhost:5000/api/sos"
+          "http://localhost:8787/api/sos"
         );
 
         const data = await response.json();
@@ -94,7 +94,7 @@ export default function EmergencyDashboard() {
       };
 
       const response = await fetch(
-        "http://localhost:5000/api/sos",
+        "http://localhost:8787/api/sos",
         {
           method: "POST",
           headers: {
