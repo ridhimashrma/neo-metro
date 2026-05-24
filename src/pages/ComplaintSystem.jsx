@@ -121,7 +121,7 @@ export default function ComplaintSystem() {
             </div>
           ) : (
             complaints.map(c => (
-              <div key={c.id} className="glass p-8 flex justify-between items-start gap-6">
+              <div key={c._id} className="glass p-8 flex justify-between items-start gap-6">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
                     <h4 className="font-bold text-xl">{c.subject}</h4>
@@ -136,7 +136,7 @@ export default function ComplaintSystem() {
                 </div>
                 
                 <button 
-                  onClick={() => deleteComplaint(c.id)}
+                  onClick={() => deleteComplaint(c._id)}
                   className="text-red-400 hover:text-red-500 hover:bg-red-500/10 p-3 rounded-xl transition-all"
                 >
                   <Trash2 size={24} />
@@ -159,7 +159,7 @@ export default function ComplaintSystem() {
           </div>
 
           {reviews.map(review => (
-            <div key={review.id} className="glass p-8">
+            <div key={review._id} className="glass p-8">
               <div className="flex justify-between items-start">
                 <p className="font-bold text-lg">{review.userName}</p>
                 <div className="flex gap-1">

@@ -26,10 +26,12 @@ mongoose
 const sosRoutes = require("./routes/sosRoutes");
 const emergencyRoutes = require("./routes/emergencyRoutes");
 const complaintRoutes = require("./routes/complaintRoutes");
+const busRoutes = require("./routes/busRoutes");
 
 app.use("/api/emergencies", emergencyRoutes);
 app.use("/api/complaints", complaintRoutes);
 app.use("/api/sos", sosRoutes);
+app.use("/api/buses", busRoutes);
 
 app.get("/", (req, res) => {
   res.send("Neo Metro Backend Running");

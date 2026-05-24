@@ -85,6 +85,10 @@ export default function AQIDashboard() {
 ) return;
 
     const fetchAQI = async () => {
+      if (!import.meta.env.VITE_OPENWEATHER_API_KEY) {
+        console.log("Missing API Key");
+        return;
+      }
 
       try {
         console.log(import.meta.env.VITE_OPENWEATHER_API_KEY);
@@ -118,6 +122,7 @@ setLoading(false);
       } catch (err) {
 
         console.log(err);
+        setLoading(false);
 
       }
 
@@ -127,7 +132,7 @@ setLoading(false);
 
     const interval = setInterval(
       fetchAQI,
-      10000
+      60000
     );
 
     return () => clearInterval(interval);

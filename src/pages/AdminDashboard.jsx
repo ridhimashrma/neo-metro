@@ -8,6 +8,7 @@ import '../styles/neometro.css';
 
 export default function AdminDashboard() {
   const { 
+    users,
     emergencyReports, addEmergency, deleteEmergency,
     complaints, deleteComplaint,
     buses,
@@ -51,7 +52,6 @@ export default function AdminDashboard() {
   if (!driverName) return;
 
   addBus({
-    id: Date.now(),
     routeNumber,
     routeName,
     driverName,
@@ -139,8 +139,8 @@ export default function AdminDashboard() {
               </thead>
               <tbody>
                 {buses?.map(bus => (
-                  <tr key={bus.id}>
-                    <td className="font-mono">{bus.id}</td>
+                  <tr key={bus._id}>
+                    <td className="font-mono">{bus.routeNumber}</td>
                     <td>{bus.routeNumber} - {bus.routeName}</td>
                     <td>{bus.driverName}</td>
                     <td>
@@ -151,7 +151,7 @@ export default function AdminDashboard() {
                     <td>{bus.fuelLevel}%</td>
                     <td>
                       <button
-  onClick={() => deleteBus(bus.id)}
+  onClick={() => deleteBus(bus._id)}
   className="text-red-400 hover:text-red-500"
 >
   <Trash2 size={18} />
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
 
           <div className="space-y-4">
             {emergencyReports?.map(report => (
-              <div key={report.id} className="glass p-6 flex items-center justify-between border-l-4 border-red-500">
+              <div key={report._id} className="glass p-6 flex items-center justify-between border-l-4 border-red-500">
                 <div className="flex-1">
                   <h4 className="font-bold capitalize text-lg">{report.type}</h4>
                   <p className="text-gray-300">{report.description}</p>
@@ -186,7 +186,7 @@ export default function AdminDashboard() {
                 
                 <div className="flex items-center gap-4">
                   <select 
-                    onChange={(e) => updateEmergencyStatus(report.id, e.target.value)}
+                    onChange={(e) => updateEmergencyStatus(report._id, e.target.value)}
                     className="glass px-4 py-2 text-sm"
                   >
                     <option value="in-progress">In Progress</option>
@@ -213,13 +213,13 @@ export default function AdminDashboard() {
           <h3 className="text-2xl font-bold mb-6">All Registered Complaints</h3>
           <div className="space-y-6">
             {complaints?.map(c => (
-              <div key={c.id} className="glass p-8 flex justify-between">
+              <div key={c._id} className="glass p-8 flex justify-between">
                 <div className="flex-1">
                   <h4 className="font-bold text-lg">{c.subject}</h4>
                   <p className="text-gray-300 mt-3">{c.description}</p>
                 </div>
                 <button 
-                  onClick={() => deleteComplaint(c.id)}
+                  onClick={() => deleteComplaint(c._id)}
                   className="text-red-400 hover:text-red-500"
                 >
                   <Trash2 size={24} />
@@ -229,6 +229,48 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
+      {/* USERS SECTION */}
+{activeSection === 'users' && (
+  <div className="glass p-8">
+    
+    <h3 className="text-2xl font-bold mb-6">
+      Registered Users
+    </h3>
+
+    <div className="space-y-4">
+
+      {users?.map(user => (
+
+        <div
+          key={user._id}
+          className="glass p-6 flex justify-between items-center"
+        >
+
+          <div>
+            <h4 className="font-bold text-lg">
+              {user.name}
+            </h4>
+
+            <p className="text-gray-400">
+              {user.email}
+            </p>
+
+            <p className="text-sm text-cyan-400 capitalize">
+              {user.role}
+            </p>
+          </div>
+
+          <div className="text-right">
+            <p>{user.phone}</p>
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+  </div>
+)}
 
       {/* SYSTEM SECTION */}
       {activeSection === 'system' && (
